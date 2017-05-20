@@ -26,7 +26,8 @@ class UploadFile extends Save implements SaveInterface
      */
     public function valid(Core $container)
     {
-        return;
+        //valid directory
+        $this->validDiretory();
     }
 
     /**

@@ -59,7 +59,9 @@ class Messages
      */
     public function setError(string $indiceMessage, array $args = [])
     {
-        $this->errors[$this->getFile()['name']][] = vsprintf($this->$indiceMessage, $args);
+        if (!array_key_exists(vsprintf($this->$indiceMessage, $args),$this->errors[$this->getFile()['name']])) {
+            $this->errors[$this->getFile()['name']][] = vsprintf($this->$indiceMessage, $args);
+        }
     }
 
     /**

@@ -135,7 +135,7 @@ class GamaCorrectImage extends Save implements SaveInterface
         }
         
         //valid is image
-        $image = new \Upload\ValidateImage();
+        $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
     }
 
