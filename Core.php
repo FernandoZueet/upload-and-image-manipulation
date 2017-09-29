@@ -465,6 +465,7 @@ class Core
         $contClass = -1;
         foreach ($this->getFile() as $ifile) {
             $contFile++; //count file
+            $contClass = -1;
             foreach ($this->getClassExecutes() as $vld) {
                 $contClass++; //count class
                 if ($contClass >= 1 && $this->getUnionExecutes()) { //union executes functions

@@ -1,0 +1,9 @@
+storage/cache/
+storage/logs/
+vendor/
+.idea/
+.vs/
+.vscode/
+.DS_Store
+composer.lock
+debug.log

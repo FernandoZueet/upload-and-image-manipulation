@@ -57,7 +57,7 @@ class Validate
         }
 
         //valid type errors
-        if ($file['error']) {
+        if (isset($file['error'])) {
             switch ($file['error']) {
                 case 1:
                     $container->getMessage()->setFile($file)->setError('sizeFileExced', [ $file['name'], $tamanhoMb ]);

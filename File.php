@@ -196,13 +196,13 @@ class File
     {
         $exif = exif_read_data($this->getTmpFile($file), 0, true);
         if ($exif) {
-            if ($exif['IFD0']['Artist']) {
+            if (isset($exif['IFD0']['Artist'])) {
                 $array['Artist'] = explode(';', $exif['IFD0']['Artist']);
             }
-            if ($exif['COMPUTED']['Copyright']) {
+            if (isset($exif['COMPUTED']['Copyright'])) {
                 $array['Copyright'] = $exif['COMPUTED']['Copyright'];
             }
-            if ($exif['FILE']['FileDateTime']) {
+            if (isset($exif['FILE']['FileDateTime'])) {
                 $array['DateTime']  = date('m/d/Y H:m:s', $exif['FILE']['FileDateTime']);
             }
             return $array ?? [];
