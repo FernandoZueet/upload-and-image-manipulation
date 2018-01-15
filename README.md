@@ -150,7 +150,7 @@ $upload->setDirectory('/path');
 * resize image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setWidth(50) - width (int)
 * ->setHeight(100) - height (int)
@@ -167,7 +167,7 @@ $resize->setDirectory('/path')->setSaveAs('jpg')
 * crop image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setX(10) - x (int)
 * ->setY(10) - y (int)
@@ -186,7 +186,7 @@ $crop->setDirectory('/path')->setSaveAs('jpg')
 * rotate image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setRotate(90) - rotate image (int - 0 a 360)
 */
@@ -202,7 +202,7 @@ $rotate->setDirectory('/path')->setSaveAs('jpg')
 * filter image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setFilter(IMG_FILTER_COLORIZE) - constant (IMG_FILTER_NEGATE, IMG_FILTER_GRAYSCALE, IMG_FILTER_BRIGHTNESS, IMG_FILTER_CONTRAST, 
 * IMG_FILTER_COLORIZE, IMG_FILTER_EDGEDETECT, IMG_FILTER_EMBOSS, IMG_FILTER_GAUSSIAN_BLUR, IMG_FILTER_SELECTIVE_BLUR, IMG_FILTER_MEAN_REMOVAL,
@@ -222,7 +222,7 @@ $filter->setDirectory('/path')->setSaveAs('jpg')
 * gama correction image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setInputgamma(300) - input gamma (float)
 * ->setOutputgamma(90) - output gamma (float)
@@ -239,7 +239,7 @@ $gamacorrect->setDirectory('/path')->setSaveAs('jpg')
 * flip image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setMode(IMG_FLIP_HORIZONTAL) - constant (IMG_FLIP_HORIZONTAL, IMG_FLIP_VERTICAL and IMG_FLIP_BOTH)
 */
@@ -255,7 +255,7 @@ $flip->setDirectory('/path')->setSaveAs('jpg')
 * text image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setSize(20) - size font (int)
 * ->setAngle(0) - angle text (int)
@@ -278,7 +278,7 @@ $textimg->setDirectory('/path')->setSaveAs('jpg')
 * watemarks image
 *
 * ->setDirectory('/path') - directory (string)
-* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | webp )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setImageLogo($_FILES['logo']) - image logo (array|string - $_FILES[] or path absolute image)
 * ->setRight(90) - right position (int)
