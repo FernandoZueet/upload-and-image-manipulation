@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -17,7 +17,7 @@ interface SaveInterface
 {
     
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @return void
@@ -25,7 +25,7 @@ interface SaveInterface
     public function valid(Core $container);
 
     /**
-     * execute function
+     * Execute function
      *
      * @param Core $container
      * @return bool
@@ -33,14 +33,14 @@ interface SaveInterface
     public function execute(Core $container) : bool;
 
     /**
-     * get directory upload
+     * Get directory upload
      *
      * @return string
      */
     public function getDirectory() : string;
 
     /**
-     * set directory upload
+     * Set directory upload
      *
      * @param string $directory
      * @return void

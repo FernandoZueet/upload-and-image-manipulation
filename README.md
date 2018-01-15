@@ -41,6 +41,7 @@ new \Upload\Langs\Eng()
 new \Upload\Validate\Image\ValidateGif()
 new \Upload\Validate\Image\ValidateJpg()
 new \Upload\Validate\Image\ValidatePng()
+new \Upload\Validate\Image\ValidateWebp()
 ```
 
 Examples:
@@ -149,12 +150,13 @@ $upload->setDirectory('/path');
 * resize image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setWidth(50) - width (int)
 * ->setHeight(100) - height (int)
 */
 $resize = new \Upload\ResizeImage();
-$resize->setDirectory('/path')
+$resize->setDirectory('/path')->setSaveAs('jpg')
        ->setPorc(100)->setWidth(50)->setHeight(100);
 ```
 
@@ -165,6 +167,7 @@ $resize->setDirectory('/path')
 * crop image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setX(10) - x (int)
 * ->setY(10) - y (int)
@@ -172,7 +175,7 @@ $resize->setDirectory('/path')
 * ->setHeight(100) - height (int)
 */
 $crop = new \Upload\CropImage();
-$crop->setDirectory('/path')
+$crop->setDirectory('/path')->setSaveAs('jpg')
      ->setPorc(100)->setX(10)->setY(10)->setWidth(100)->setHeight(100);
 ```
 
@@ -183,11 +186,12 @@ $crop->setDirectory('/path')
 * rotate image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setRotate(90) - rotate image (int - 0 a 360)
 */
 $rotate = new \Upload\RotateImage();
-$rotate->setDirectory('/path')
+$rotate->setDirectory('/path')->setSaveAs('jpg')
        ->setPorc(100)->setRotate(90);
 ```
 
@@ -198,6 +202,7 @@ $rotate->setDirectory('/path')
 * filter image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setFilter(IMG_FILTER_COLORIZE) - constant (IMG_FILTER_NEGATE, IMG_FILTER_GRAYSCALE, IMG_FILTER_BRIGHTNESS, IMG_FILTER_CONTRAST, 
 * IMG_FILTER_COLORIZE, IMG_FILTER_EDGEDETECT, IMG_FILTER_EMBOSS, IMG_FILTER_GAUSSIAN_BLUR, IMG_FILTER_SELECTIVE_BLUR, IMG_FILTER_MEAN_REMOVAL,
@@ -206,7 +211,7 @@ $rotate->setDirectory('/path')
 * docs complete http://us2.php.net/manual/en/function.imagefilter.php
 */
 $filter = new \Upload\FilterImage();
-$filter->setDirectory('/path')
+$filter->setDirectory('/path')->setSaveAs('jpg')
        ->setPorc(100)->setFilter(IMG_FILTER_COLORIZE)->setArg1(0)->setArg2(255)->setArg3(0)/*-setArg4(0)*/;
 ```
 
@@ -217,12 +222,13 @@ $filter->setDirectory('/path')
 * gama correction image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setInputgamma(300) - input gamma (float)
 * ->setOutputgamma(90) - output gamma (float)
 */
 $gamacorrect = new \Upload\GamaCorrectImage();
-$gamacorrect->setDirectory('/path')
+$gamacorrect->setDirectory('/path')->setSaveAs('jpg')
             ->setPorc(100)->setInputgamma(300)->setOutputgamma(90);
 ```
 
@@ -233,11 +239,12 @@ $gamacorrect->setDirectory('/path')
 * flip image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setMode(IMG_FLIP_HORIZONTAL) - constant (IMG_FLIP_HORIZONTAL, IMG_FLIP_VERTICAL and IMG_FLIP_BOTH)
 */
 $flip = new \Upload\FlipImage();
-$flip->setDirectory('/path')
+$flip->setDirectory('/path')->setSaveAs('jpg')
      ->setPorc(100)->setMode(IMG_FLIP_HORIZONTAL); 
 ```
 
@@ -248,6 +255,7 @@ $flip->setDirectory('/path')
 * text image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setSize(20) - size font (int)
 * ->setAngle(0) - angle text (int)
@@ -258,7 +266,7 @@ $flip->setDirectory('/path')
 * ->setText('Example') - text image (string)
 */
 $textimg = new \Upload\TextImage();
-$textimg->setDirectory('/path')
+$textimg->setDirectory('/path')->setSaveAs('jpg')
         ->setPorc(100)->setSize(20)->setAngle(0)->setX(50)->setY(50)->setFontFile('/path/arial.ttf') 
         ->setRgbColor([0,1,255])->setText('Example');
 ```
@@ -270,13 +278,14 @@ $textimg->setDirectory('/path')
 * watemarks image
 *
 * ->setDirectory('/path') - directory (string)
+* ->setSaveAs('jpg') - string - optional ( jpg | png | gif | web )
 * ->setPorc(100) - quality image (int - 0 a 100)
 * ->setImageLogo($_FILES['logo']) - image logo (array|string - $_FILES[] or path absolute image)
 * ->setRight(90) - right position (int)
 * ->setBottom(50) - bottom position (int)
 */
 $watermarks = new \Upload\WatermarksImage();
-$watermarks->setDirectory('/path')
+$watermarks->setDirectory('/path')->setSaveAs('jpg')
            ->setPorc(100)->setImageLogo($_FILES['logo'])->setRight(90)->setBottom(50);
 ```
 

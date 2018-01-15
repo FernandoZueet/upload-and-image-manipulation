@@ -9,13 +9,13 @@
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
 
-namespace Upload\Validate\Doc;
+namespace Upload\Validate\Image;
 
 use \Upload\Core;
-use \Upload\Validate\Doc\ValidateDocument;
+use \Upload\Validate\Image\ValidateImage;
 use \Upload\Validate\ValidadeInterface;
 
-class ValidatePdf extends ValidateDocument implements ValidadeInterface
+class ValidateWebp extends ValidateImage implements ValidadeInterface
 {
     
     /**
@@ -23,7 +23,7 @@ class ValidatePdf extends ValidateDocument implements ValidadeInterface
      *
      * @var string
      */
-    private $mimeTypeFile = "application/pdf";
+    private $mimeTypeFile = "image/webp";
 
     /**
      * Get mime type file
@@ -54,6 +54,9 @@ class ValidatePdf extends ValidateDocument implements ValidadeInterface
 
         //valid size
         $container->getValidate()->validSize($container, $this->getMaxSizeByte());
+
+        //valid dimensions
+        $this->validDimension($container);
 
         return true;
     }

@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -21,49 +21,56 @@ class ValidateImage
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * width image
+     * Extension save as permitted
+     *
+     * @var array
+     */
+    private $extensionSaveAsPermitted = ['jpg', 'png', 'gif', 'webp'];
+
+    /**
+     * Width image
      *
      * @var int
      */
     private $width = 0;
 
     /**
-     * height image
+     * Height image
      *
      * @var int
      */
     private $height = 0;
 
     /**
-     * min width image
+     * Min width image
      *
      * @var int
      */
     private $minWidth = 0;
 
     /**
-     *min height image
+     * Min height image
      *
      * @var int
      */
     private $minHeight = 0;
 
     /**
-     * max width image
+     * Max width image
      *
      * @var int
      */
     private $maxWidth = 0;
 
     /**
-     * max height image
+     * Max height image
      *
      * @var int
      */
     private $maxHeight = 0;
 
     /**
-     * max size byte file
+     * Max size byte file
      *
      * @var int
      */
@@ -75,7 +82,7 @@ class ValidateImage
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get width image
+     * Get width image
      *
      * @return int
      */
@@ -85,7 +92,7 @@ class ValidateImage
     }
 
     /**
-     * set width image
+     * Set width image
      *
      * @param int $width
      * @return void
@@ -97,7 +104,7 @@ class ValidateImage
     }
 
     /**
-     * get height image
+     * Get height image
      *
      * @return int
      */
@@ -107,7 +114,7 @@ class ValidateImage
     }
 
     /**
-     * set height image
+     * Set height image
      *
      * @param int $height
      * @return void
@@ -119,7 +126,7 @@ class ValidateImage
     }
 
     /**
-     * get min width image
+     * Get min width image
      *
      * @return int
      */
@@ -129,7 +136,7 @@ class ValidateImage
     }
 
     /**
-     * set min width image
+     * Set min width image
      *
      * @param int $minWidth
      * @return void
@@ -141,7 +148,7 @@ class ValidateImage
     }
 
     /**
-     * get min height image
+     * Get min height image
      *
      * @return int
      */
@@ -151,7 +158,7 @@ class ValidateImage
     }
 
     /**
-     * set min height image
+     * Set min height image
      *
      * @param int $minHeight
      * @return void
@@ -163,7 +170,7 @@ class ValidateImage
     }
 
     /**
-     * get max width image
+     * Get max width image
      *
      * @return int
      */
@@ -173,7 +180,7 @@ class ValidateImage
     }
 
     /**
-     * set max width image
+     * Set max width image
      *
      * @param int $maxWidth
      * @return void
@@ -185,7 +192,7 @@ class ValidateImage
     }
 
     /**
-     * get max height image
+     * Get max height image
      *
      * @return int
      */
@@ -195,7 +202,7 @@ class ValidateImage
     }
 
     /**
-     * set max height image
+     * Set max height image
      *
      * @param int $maxHeight
      * @return void
@@ -207,7 +214,7 @@ class ValidateImage
     }
 
     /**
-     * get max size byte permitted file
+     * Get max size byte permitted file
      *
      * @return int
      */
@@ -217,7 +224,7 @@ class ValidateImage
     }
 
     /**
-     * set max size byte permitted file
+     * Set max size byte permitted file
      *
      * @param int $maxSizeByte
      * @return void
@@ -233,14 +240,14 @@ class ValidateImage
     *-------------------------------------------------------------------------------------*/
    
     /**
-     * valid dimensions
+     * Valid dimensions
      *
      * @param Core $container
      * @return void
      */
     public function validDimension(Core $container)
     {
-
+        
         //is image
         $this->validImageFormat($container);
 
@@ -284,7 +291,7 @@ class ValidateImage
     }
 
     /**
-     * image valid format
+     * Image valid format
      *
      * @param Core $container
      * @return void
@@ -297,6 +304,19 @@ class ValidateImage
         //is image
         if (!$file['width'] && !$file['height']) {
             $container->getMessage()->setFile($file)->setError('fileTypeError', [$file['type']]);
+        }
+    }
+
+    /**
+     * Valid image save as
+     *
+     * @param string $extension ( jpg | png | gif | webp )
+     * @return void
+     */
+    public function validIsImageSaveAs(string $extension) 
+    {
+        if (!in_array($extension, $this->extensionSaveAsPermitted)) {
+            throw new \UnexpectedValueException("SetSaveImageAs function only allows values ​​(jpg, png, gif and png)");
         }
     }
 }

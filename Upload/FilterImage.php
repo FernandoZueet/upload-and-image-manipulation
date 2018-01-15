@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,14 +23,14 @@ class FilterImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc 
+     * Porc 
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * filter image
+     * Filter image
      *
      * @link http://us2.php.net/manual/en/function.imagefilter.php
      * @var constant
@@ -38,28 +38,28 @@ class FilterImage extends Save implements SaveInterface
     private $filter;
 
     /**
-     * arg1
+     * Arg1
      *
      * @var mixed
      */
     private $arg1;
 
     /**
-     * arg2
+     * Arg2
      *
      * @var mixed
      */
     private $arg2;
 
     /**
-     * arg3
+     * Arg3
      *
      * @var mixed
      */
     private $arg3;
 
     /**
-     * arg4
+     * Arg4
      *
      * @var mixed
      */
@@ -70,7 +70,7 @@ class FilterImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -80,7 +80,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -92,7 +92,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
     /**
-     * get filter
+     * Get filter
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * set filter
+     * Set filter
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * get arg1
+     * Get arg1
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * set arg1
+     * Set arg1
      *
      * @return void
      */
@@ -134,7 +134,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * get arg2
+     * Get arg2
      *
      * @return void
      */
@@ -144,7 +144,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * set arg2
+     * Set arg2
      *
      * @return void
      */
@@ -155,7 +155,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * get arg3
+     * Get arg3
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * set arg3
+     * Set arg3
      *
      * @return void
      */
@@ -176,7 +176,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * get arg4
+     * Get arg4
      *
      * @return void
      */
@@ -186,7 +186,7 @@ class FilterImage extends Save implements SaveInterface
     }
 
      /**
-     * set arg4
+     * Set arg4
      *
      * @return void
      */
@@ -201,7 +201,7 @@ class FilterImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
     
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -225,6 +225,11 @@ class FilterImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
 
     /**
@@ -244,7 +249,11 @@ class FilterImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -259,7 +268,7 @@ class FilterImage extends Save implements SaveInterface
         }
 
         //image generate
-        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;

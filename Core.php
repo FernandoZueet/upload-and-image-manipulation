@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,70 +23,70 @@ class Core
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * array class validates
+     * Array class validates
      *
      * @var array
      */
     private $objValids = [];
 
     /**
-     * class Validate
+     * Class Validate
      *
      * @var Validate
      */
     private $validate;
 
     /**
-     * class Messages
+     * Class Messages
      *
      * @var class
      */
     private $message;
 
     /**
-     * status upload multiple
+     * Status upload multiple
      *
      * @var boolean
      */
     private $uploadMultiple = false;
 
     /**
-     * class file
+     * Class file
      *
      * @var File
      */
     private $fileClass;
 
     /**
-     * array de files
+     * Array de files
      *
      * @var array
      */
     private $file = [];
 
     /**
-     * file active
+     * File active
      *
      * @var array
      */
     private $fileActive = [];
 
     /**
-     * status validate
+     * Status validate
      *
      * @var boolean
      */
     private $statusValidate = false;
 
     /**
-     * array class executes
+     * Array class executes
      *
      * @var array
      */
     private $classExecutes = [];
 
     /**
-     * union executes
+     * Union executes
      *
      * @var boolean
      */
@@ -97,7 +97,7 @@ class Core
     *-------------------------------------------------------------------------------------*/
     
     /**
-     * get array class validates
+     * Get array class validates
      *
      * @return array
      */
@@ -107,7 +107,7 @@ class Core
     }
 
     /**
-     * set array class validates
+     * Set array class validates
      *
      * @param array $objValids
      * @return void
@@ -124,7 +124,7 @@ class Core
     }
 
     /**
-     * get class Validate
+     * Get class Validate
      *
      * @return Validate
      */
@@ -134,7 +134,7 @@ class Core
     }
 
      /**
-     * set class Validate
+     * Set class Validate
      *
      * @return Validate
      */
@@ -145,7 +145,7 @@ class Core
     }
 
     /**
-     * get class Messages
+     * Get class Messages
      *
      * @return void
      */
@@ -155,7 +155,7 @@ class Core
     }
 
     /**
-     * set class Messages
+     * Set class Messages
      *
      * @param class $message
      * @return void
@@ -167,7 +167,7 @@ class Core
     }
 
     /**
-     * get status upload multiple
+     * Get status upload multiple
      *
      * @return bool
      */
@@ -177,7 +177,7 @@ class Core
     }
 
     /**
-     * set status upload multiple
+     * Set status upload multiple
      *
      * @param bool $uploadMultiple
      * @return void
@@ -189,7 +189,7 @@ class Core
     }
 
     /**
-     * get class File
+     * Get class File
      *
      * @return File
      */
@@ -199,7 +199,7 @@ class Core
     }
 
     /**
-     * set class File
+     * Set class File
      *
      * @param File $fileClass
      * @return void
@@ -211,7 +211,7 @@ class Core
     }
 
     /**
-     * get file array
+     * Get file array
      *
      * @return array
      */
@@ -221,7 +221,7 @@ class Core
     }
 
     /**
-     * set file array
+     * Set file array
      *
      * @param array $file
      * @return void
@@ -233,7 +233,7 @@ class Core
     }
 
     /**
-     * get file active
+     * Get file active
      *
      * @return array
      */
@@ -243,7 +243,7 @@ class Core
     }
     
     /**
-     * set file active
+     * Set file active
      *
      * @param array $fileActive
      * @return void
@@ -255,7 +255,7 @@ class Core
     }
 
     /**
-     * get status validate
+     * Get status validate
      *
      * @return bool
      */
@@ -265,7 +265,7 @@ class Core
     }
 
     /**
-     * set status validate
+     * Set status validate
      *
      * @param bool $statusValidate
      * @return void
@@ -277,7 +277,7 @@ class Core
     }
 
     /**
-     * get class executes
+     * Get class executes
      *
      * @return array
      */
@@ -287,7 +287,7 @@ class Core
     }
 
     /**
-     * set class executes
+     * Set class executes
      *
      * @param array $classExecutes
      * @return void
@@ -302,7 +302,7 @@ class Core
     }
 
     /**
-     * get union executes
+     * Get union executes
      *
      * @return bool
      */
@@ -312,7 +312,7 @@ class Core
     }
 
     /**
-     * set union executes
+     * Set union executes
      *
      * @param bool $unionExecutes
      * @return void
@@ -328,7 +328,7 @@ class Core
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * initial settings and set data in the application container
+     * Initial settings and set data in the application container
      *
      * @return void
      */
@@ -341,7 +341,7 @@ class Core
     }
 
     /**
-     * get errors upload
+     * Get errors upload
      *
      * @return array
      */
@@ -354,7 +354,7 @@ class Core
     }
 
     /**
-     * validate functions files
+     * Validate functions files
      *
      * @return void
      */
@@ -407,7 +407,7 @@ class Core
     }
 
     /**
-     * validate functions upload
+     * Validate functions upload
      *
      * @param array $arrayExecutes
      * @return void
@@ -448,7 +448,7 @@ class Core
     }
 
     /**
-     * upload functions execute
+     * Upload functions execute
      *
      * @return bool
      */
@@ -488,7 +488,7 @@ class Core
     }
 
     /**
-     * delete files error upload function
+     * Delete files error upload function
      *
      * @return void
      */

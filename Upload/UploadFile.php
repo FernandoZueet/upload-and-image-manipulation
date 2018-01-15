@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -19,7 +19,7 @@ class UploadFile extends Save implements SaveInterface
 {
 
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @return void
@@ -28,6 +28,11 @@ class UploadFile extends Save implements SaveInterface
     {
         //valid directory
         $this->validDiretory();
+
+        //valid save as
+        if($this->getSaveAs()) {
+            throw new \UnexpectedValueException("setSaveImageAs Not supported in upload function");
+        }
     }
 
     /**

@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,21 +23,21 @@ class ResizeImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc
+     * Porc
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * width resize
+     * Width resize
      *
      * @var int
      */
     private $width = 0;
 
     /**
-     * height resize
+     * Height resize
      *
      * @var int
      */
@@ -48,7 +48,7 @@ class ResizeImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -58,7 +58,7 @@ class ResizeImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -70,7 +70,7 @@ class ResizeImage extends Save implements SaveInterface
     }
 
     /**
-     * get width resize
+     * Get width resize
      *
      * @return int
      */
@@ -80,7 +80,7 @@ class ResizeImage extends Save implements SaveInterface
     }
 
     /**
-     * set width resize
+     * Set width resize
      *
      * @param int $width
      * @return void
@@ -92,7 +92,7 @@ class ResizeImage extends Save implements SaveInterface
     }
 
     /**
-     * get height resize
+     * Get height resize
      *
      * @return int
      */
@@ -102,7 +102,7 @@ class ResizeImage extends Save implements SaveInterface
     }
 
     /**
-     * set height resize
+     * Set height resize
      *
      * @param int $height
      * @return void
@@ -118,7 +118,7 @@ class ResizeImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
     
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -147,6 +147,11 @@ class ResizeImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
 
     /**
@@ -166,7 +171,11 @@ class ResizeImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        }else{
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -191,7 +200,7 @@ class ResizeImage extends Save implements SaveInterface
 
         //image resize
         imagecopyresampled($thumb, $image, 0, 0, 0, 0, $width, $height, $file['width'], $file['height']);
-        if ($imggd->imgGenerate($thumb, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($thumb, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;

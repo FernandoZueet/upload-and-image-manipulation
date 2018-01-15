@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,28 +23,28 @@ class WatermarksImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc
+     * Porc
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * image logo path
+     * Image logo path
      *
      * @var string|array
      */
     private $imageLogo = "";
 
     /**
-     * right position logo
+     * Right position logo
      *
      * @var int
      */
     private $right = 10;
 
     /**
-     * bottom position logo
+     * Bottom position logo
      *
      * @var int
      */
@@ -55,7 +55,7 @@ class WatermarksImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -65,7 +65,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -77,7 +77,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * get image string logo
+     * Get image string logo
      *
      * @return string|array
      */
@@ -87,7 +87,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * set image string logo
+     * Set image string logo
      *
      * @param string|array $imageLogo
      * @return void
@@ -99,7 +99,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * get right position logo
+     * Get right position logo
      *
      * @return int
      */
@@ -109,7 +109,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
      /**
-     * set right position logo
+     * Set right position logo
      *
      * @return int
      */
@@ -120,7 +120,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * get bottom position logo
+     * Get bottom position logo
      *
      * @return int
      */
@@ -130,7 +130,7 @@ class WatermarksImage extends Save implements SaveInterface
     }
 
     /**
-     * set bottom position logo
+     * Set bottom position logo
      *
      * @param int $bottom
      * @return void
@@ -146,7 +146,7 @@ class WatermarksImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
     
    /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -170,10 +170,15 @@ class WatermarksImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
     
     /**
-     * watermarks image
+     * Watermarks image
      *
      * @param Core $container
      * @link imagecopy http://php.net/manual/pt_BR/function.imagecopy.php
@@ -190,7 +195,11 @@ class WatermarksImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //reorganized image logo array
         if (is_string($this->getImageLogo())) {
@@ -212,7 +221,7 @@ class WatermarksImage extends Save implements SaveInterface
         // Copy the stamp image onto our photo using the margin offsets and the photo
         // width to calculate positioning of the stamp.
         imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
-        if ($imggd->imgGenerate($im, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($im, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;

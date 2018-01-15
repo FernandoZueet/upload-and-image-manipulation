@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -15,14 +15,14 @@ interface MessagesInterface
 {
 
     /**
-     * get file
+     * Get file
      *
      * @return array
      */
     public function getFile() : array;
 
     /**
-     * set file array
+     * Set file array
      *
      * @param array $file
      * @return void
@@ -30,7 +30,7 @@ interface MessagesInterface
     public function setFile(array $file);
 
     /**
-     * set message array
+     * Set message array
      *
      * @param string $indiceMessage
      * @param array $args
@@ -39,7 +39,7 @@ interface MessagesInterface
     public function setError(string $indiceMessage, array $args = []);
 
     /**
-     * get errors messages
+     * Get errors messages
      *
      * @return array
      */

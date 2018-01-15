@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -17,14 +17,21 @@ class Save
 {
     
     /**
-     * directory upload
+     * Directory upload
      *
      * @var string
      */
     private $directory = "";
 
     /**
-     * get directory upload
+     * Save  as
+     *
+     * @var string
+     */
+    private $saveAs = "";
+
+    /**
+     * Get directory upload
      *
      * @return string
      */
@@ -34,7 +41,7 @@ class Save
     }
 
     /**
-     * set directory upload
+     * Set directory upload
      *
      * @param string $directory
      * @return void
@@ -46,7 +53,7 @@ class Save
     }
 
     /**
-     * valid diretory upload
+     * Valid diretory upload
      *
      * @param array $param
      * @throws Exception
@@ -55,7 +62,28 @@ class Save
     public function validDiretory()
     {
         if (!is_dir($this->getDirectory())) {
-            throw new \UnexpectedValueException("{$this->getDirectory()} directory not found.");
+            mkdir($this->getDirectory(), 0777, true);
         }
     }
+
+    /**
+     * Save as
+     *
+     * @param string $saveAs (jpg | png | gif | webp)
+     * @return void
+     */
+    public function setSaveAs(string $saveAs) {
+        $this->saveAs = $saveAs;
+        return $this;
+    }
+
+    /**
+     * Get save as
+     *
+     * @return string
+     */
+    public function getSaveAs() : string {
+        return $this->saveAs;
+    }
+
 }

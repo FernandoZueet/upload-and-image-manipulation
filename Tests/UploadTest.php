@@ -1,12 +1,19 @@
 <?php
-namespace Helpers\Upload;
 
-use \Helpers\upload\FactoryUpload;
-use \Bootstrap\Bootstrap;
-use \site\configs\AppConfigSite;
+/**
+ * This file is part of the Upload Manipulation package.
+ *
+ * @link http://github.com/fernandozueet/upload-and-image-manipulation
+ * @copyright 2018
+ * @license MIT License
+ * @author Fernando Zueet <fernandozueet@hotmail.com>
+ */
+
+namespace Helpers\Upload;
 
 class UploadTest extends \PHPUnit_Framework_TestCase
 {    
+    
     /**
     * @test
     */
@@ -15,13 +22,11 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         /**
         * get files $_FILES[]  or array absolute paths
         */
-        $filesInput['tmp_name'][0] = 'C:\Users\vogo\Pictures\camera.jpg';
-        $filesInput['name'][0] = 'imagem1.jpeg';
+        $filesInput['tmp_name'][0] = 'C:\upload_teste.webp';
+        $filesInput['name'][0] = 'upload_teste.webp';
         $filesInput['size'][0] = '81123';
-        $filesInput['type'][0] = 'image/jpeg';
+        $filesInput['type'][0] = 'image/webp';
         
-
-
         //---------------------------------------------------------
 
         /**
@@ -36,17 +41,19 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         *
         * ->setDirectory('/path') - directory (string)
         */
-        $validaPng = new \Upload\Validate\Image\ValidatePng();
+        $validaPng = new \Upload\Validate\Image\ValidateWebp();
 
         //---------------------------------------------------------
 
         /**
-        * upload
+        * resize image
         *
-        * ->setDirectory('/path') - directory (string)
+        * ->setPorc(100) - quality image (int - 0 a 100)
+        * ->setWidth(50) - width (int)
+        * ->setHeight(100) - height (int)
         */
-        $upload = new \Upload\UploadFile();
-        $upload->setDirectory('C:\xampp\htdocs\desenv');        
+        $resize = new \Upload\ResizeImage();
+        $resize->setDirectory('C:\upload')->setPorc(95)->setWidth(300)->setHeight(300);
 
         //---------------------------------------------------------
 
@@ -61,8 +68,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         */
         $core = new \Upload\Core();
         $core->setMessage(new \Upload\Langs\PtBr())->setFile($filesInput ?? [])->setUploadMultiple(true)
-        ->setObjValids([$validaJpg,$validaPng])
-        ->validExecute([$upload]);
+        ->setObjValids([$validaJpg, $validaPng])
+        ->validExecute([$resize]);
 
         //---------------------------------------------------------
 
@@ -97,8 +104,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         /**
         * get files $_FILES[]  or array absolute paths
         */
-        $filesInput['tmp_name'][0] = 'C:\Users\vogo\Pictures\camera.jpg';
-        $filesInput['tmp_name'][1] = 'C:\Users\vogo\Pictures\sacola.jpg';
+        $filesInput['tmp_name'][0] = 'C:\Users\Pictures\camera.jpg';
+        $filesInput['tmp_name'][1] = 'C:\Users\Pictures\sacola.jpg';
         $filesInput['name'][0] = 'imagem1.jpeg';
         $filesInput['name'][1] = 'imagem2.jpeg';
         $filesInput['size'][0] = '81123';
@@ -183,8 +190,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         /**
         * get files $_FILES[]  or array absolute paths
         */
-        $filesInput['tmp_name'][0] = 'C:\Users\vogo\Pictures\camera.jpg';
-        $filesInput['tmp_name'][1] = 'C:\Users\vogo\Pictures\sacola.jpg';
+        $filesInput['tmp_name'][0] = 'C:\Users\Pictures\camera.jpg';
+        $filesInput['tmp_name'][1] = 'C:\Users\Pictures\sacola.jpg';
         $filesInput['name'][0] = 'imagem1.jpeg';
         $filesInput['name'][1] = 'imagem2.jpeg';
         $filesInput['size'][0] = '81123';
@@ -272,7 +279,7 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         /**
         * get files $_FILES[]  or array absolute paths
         */
-        $filesInput['tmp_name'][0] = 'C:\Users\vogo\Pictures\camera.jpg';
+        $filesInput['tmp_name'][0] = 'C:\Users\Pictures\camera.jpg';
         $filesInput['name'][0] = 'imagem1.jpeg';
         $filesInput['size'][0] = '81123';
         $filesInput['type'][0] = 'image/jpeg';        
@@ -355,8 +362,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         /**
         * get files $_FILES[]  or array absolute paths
         */
-        $filesInput['tmp_name'][0] = 'C:\Users\vogo\Pictures\camera.jpg';
-        $filesInput['tmp_name'][1] = 'C:\Users\vogo\Pictures\sacola.jpg';
+        $filesInput['tmp_name'][0] = 'C:\Users\Pictures\camera.jpg';
+        $filesInput['tmp_name'][1] = 'C:\Users\Pictures\sacola.jpg';
         $filesInput['name'][0] = 'imagem1.jpeg';
         $filesInput['name'][1] = 'imagem2.jpeg';
         $filesInput['size'][0] = '81123';

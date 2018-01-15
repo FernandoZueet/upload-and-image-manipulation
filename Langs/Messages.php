@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -15,21 +15,21 @@ class Messages
 {
 
     /**
-     * messages errors
+     * Messages errors
      *
      * @var array
      */
     private $errors = [];
 
     /**
-     * file array
+     * File array
      *
      * @var array
      */
     private $file;
 
     /**
-     * get file array
+     * Get file array
      *
      * @return array
      */
@@ -39,7 +39,7 @@ class Messages
     }
 
     /**
-     * set file array
+     * Set file array
      *
      * @param array $file
      * @return void
@@ -51,7 +51,7 @@ class Messages
     }
 
     /**
-     * set message array
+     * Set message array
      *
      * @param string $indiceMessage
      * @param array $args
@@ -65,7 +65,7 @@ class Messages
     }
 
     /**
-     * get errors messages
+     * Get errors messages
      *
      * @return array
      */

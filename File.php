@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -21,7 +21,7 @@ class File
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * mime type permitted
+     * Mime type permitted
      *
      * @var array
      */
@@ -37,7 +37,8 @@ class File
                                   'text/plain',
                                   'application/vnd.ms-excel',
                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                  'text/csv'
+                                  'text/csv',
+                                  'image/webp'
                                  ];
     
     /*-------------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ class File
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get mime type permitted
+     * Get mime type permitted
      *
      * @return array
      */
@@ -59,7 +60,7 @@ class File
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * reorganized file array
+     * Reorganized file array
      *
      * @param array $file
      * @return void
@@ -80,7 +81,7 @@ class File
     }
 
     /**
-     * get new name file
+     * Get new name file
      *
      * @return string
      */
@@ -90,7 +91,7 @@ class File
     }
 
     /**
-     * get name file
+     * Get name file
      *
      * @param array $file
      * @return string
@@ -104,7 +105,7 @@ class File
     }
 
     /**
-     * get type file
+     * Get type file
      *
      * @param array $file
      * @return string
@@ -121,7 +122,7 @@ class File
     }
 
     /**
-     * get path file
+     * Get path file
      *
      * @param array $file
      * @return string
@@ -132,7 +133,7 @@ class File
     }
 
     /**
-     * get size file
+     * Get size file
      *
      * @param array $file
      * @return int
@@ -156,7 +157,7 @@ class File
     }
 
     /**
-     * get extension file
+     * Get extension file
      *
      * @param string $file
      * @return string
@@ -167,51 +168,66 @@ class File
     }
 
     /**
-     * get dimension image
+     * Get dimension image
      *
      * @param array $file
      * @return array
      */
     public function getDimensionImage(array $file) : array
     {
-        @list($width, $height, $type, $attr) = getimagesize($this->getTmpFile($file));
-        if ($width && $height) {
+        $ext = $this->getExtFile($this->getTmpFile($file));
+        //I deal with webp format
+        if($ext == 'webp') {
+            $img = imagecreatefromwebp($this->getTmpFile($file));
             return [
-                'width'  => $width,
-                'height' => $height,
-                'type'   => $type,
-                'attr'   => $attr
+                'width'  => imagesx($img),
+                'height' => imagesy($img),
             ];
+        //Other cases
+        }else{
+            @list($width, $height, $type, $attr) = getimagesize($this->getTmpFile($file));
+            if ($width && $height) {
+                return [
+                    'width'  => $width,
+                    'height' => $height,
+                    'type'   => $type,
+                    'attr'   => $attr
+                ];
+            }
         }
         return [];
     }
 
     /**
-     * get info file exif
+     * Get info file exif
      *
      * @param array $file
      * @return array
      */
     public function getInfoFile(array $file) : array
     {
-        $exif = exif_read_data($this->getTmpFile($file), 0, true);
-        if ($exif) {
-            if (isset($exif['IFD0']['Artist'])) {
-                $array['Artist'] = explode(';', $exif['IFD0']['Artist']);
+        $ext = $this->getExtFile($this->getTmpFile($file));
+        //Other cases
+        if($ext != 'webp') {
+            $exif = exif_read_data($this->getTmpFile($file), 0, true);
+            if ($exif) {
+                if (isset($exif['IFD0']['Artist'])) {
+                    $array['Artist'] = explode(';', $exif['IFD0']['Artist']);
+                }
+                if (isset($exif['COMPUTED']['Copyright'])) {
+                    $array['Copyright'] = $exif['COMPUTED']['Copyright'];
+                }
+                if (isset($exif['FILE']['FileDateTime'])) {
+                    $array['DateTime']  = date('m/d/Y H:m:s', $exif['FILE']['FileDateTime']);
+                }
+                return $array ?? [];
             }
-            if (isset($exif['COMPUTED']['Copyright'])) {
-                $array['Copyright'] = $exif['COMPUTED']['Copyright'];
-            }
-            if (isset($exif['FILE']['FileDateTime'])) {
-                $array['DateTime']  = date('m/d/Y H:m:s', $exif['FILE']['FileDateTime']);
-            }
-            return $array ?? [];
         }
         return [];
     }
 
     /**
-     * file update
+     * File update
      *
      * @param Core $container
      * @param int $pos
@@ -227,7 +243,7 @@ class File
     }
 
     /**
-     * prepare new file
+     * Prepare new file
      *
      * @return void
      */

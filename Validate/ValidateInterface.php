@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -17,14 +17,14 @@ interface ValidadeInterface
 {
     
     /**
-     * get mime trype file
+     * Get mime trype file
      *
      * @return string
      */
     function getMimeTypeFile() : string;
 
     /**
-     * execute validate type file
+     * Execute validate type file
      *
      * @param Core $container
      * @return bool
@@ -32,7 +32,7 @@ interface ValidadeInterface
     function execute(Core $container) : bool;
 
     /**
-     * set max size byte permitted file
+     * Set max size byte permitted file
      *
      * @param int $maxSizeByte
      * @return void
@@ -40,7 +40,7 @@ interface ValidadeInterface
     function setMaxSizeByte(int $maxSizeByte);
 
     /**
-     * get max size byte permitted file
+     * Get max size byte permitted file
      *
      * @return int
      */

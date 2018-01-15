@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,56 +23,56 @@ class TextImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc
+     * Porc
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * rgb color text
+     * Rgb color text
      *
      * @var array
      */
     private $rgbColor = [0,0,0];
 
     /**
-     * size font text
+     * Size font text
      *
      * @var int
      */
     private $size = 16;
 
     /**
-     * angle text
+     * Angle text
      *
      * @var int
      */
     private $angle = 0;
 
     /**
-     * x
+     * X
      *
      * @var int
      */
     private $x = 50;
 
     /**
-     * y
+     * Y
      *
      * @var int
      */
     private $y = 50;
 
     /**
-     * font file text
+     * Font file text
      *
      * @var string
      */
     private $fontFile = "";
 
     /**
-     * text image
+     * Text image
      *
      * @var string
      */
@@ -83,7 +83,7 @@ class TextImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -93,7 +93,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -105,7 +105,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get rgb color text
+     * Get rgb color text
      *
      * @return array
      */
@@ -115,7 +115,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set rgb color text
+     * Set rgb color text
      *
      * @param array $rgbColor
      * @return void
@@ -127,7 +127,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get size font
+     * Get size font
      *
      * @return int
      */
@@ -137,7 +137,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set size font
+     * Set size font
      *
      * @param int $size
      * @return void
@@ -149,7 +149,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get angle font
+     * Get angle font
      *
      * @return int
      */
@@ -159,7 +159,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set angle font
+     * Set angle font
      *
      * @param int $angle
      * @return void
@@ -171,7 +171,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get x font
+     * Get x font
      *
      * @return int
      */
@@ -181,7 +181,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set x font
+     * Set x font
      *
      * @param int $x
      * @return void
@@ -193,7 +193,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get y font
+     * Get y font
      *
      * @return int
      */
@@ -203,7 +203,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set y font
+     * Set y font
      *
      * @param int $y
      * @return void
@@ -215,7 +215,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get font file
+     * Get font file
      *
      * @return string
      */
@@ -225,7 +225,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set font file
+     * Set font file
      *
      * @param string $fontFile
      * @return void
@@ -237,7 +237,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * get text
+     * Get text
      *
      * @return string
      */
@@ -247,7 +247,7 @@ class TextImage extends Save implements SaveInterface
     }
 
     /**
-     * set text
+     * Set text
      *
      * @param string $text
      * @return void
@@ -263,7 +263,7 @@ class TextImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
     
    /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -292,6 +292,11 @@ class TextImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
 
     /**
@@ -312,7 +317,11 @@ class TextImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -325,7 +334,7 @@ class TextImage extends Save implements SaveInterface
 
         //image text
         imagettftext($image, $this->getSize(), $this->getAngle(), $this->getX(), $this->getY(), imagecolorallocate($image, $this->getRgbColor()[0], $this->getRgbColor()[1], $this->getRgbColor()[2]), $this->getFontFile(), $this->getText());
-        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;

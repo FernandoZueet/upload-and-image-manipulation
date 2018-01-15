@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -18,19 +18,19 @@ use \Upload\SaveInterface;
 class FlipImage extends Save implements SaveInterface
 {
 
-     /*-------------------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------------------
     * Attributes
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc 
+     * Porc 
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * mode
+     * Mode
      *
      * @link imagerotate http://php.net/manual/en/function.imageflip.php
      * @var constant
@@ -42,7 +42,7 @@ class FlipImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -52,7 +52,7 @@ class FlipImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -64,7 +64,7 @@ class FlipImage extends Save implements SaveInterface
     }
 
     /**
-     * get flip mode
+     * Get flip mode
      *
      * @return void
      */
@@ -74,7 +74,7 @@ class FlipImage extends Save implements SaveInterface
     }
 
     /**
-     * set flip mode
+     * Set flip mode
      *
      * @param mixed $mode
      * @return void
@@ -90,7 +90,7 @@ class FlipImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
     
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -114,10 +114,15 @@ class FlipImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
     
     /**
-     * image flip
+     * Image flip
      *
      * @param array $file
      * @link imagecreatetruecolor http://php.net/manual/pt_BR/function.imagecreatetruecolor.php
@@ -133,7 +138,11 @@ class FlipImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -148,7 +157,7 @@ class FlipImage extends Save implements SaveInterface
         }
 
         //image generate
-        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($image, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;

@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -15,7 +15,7 @@ class ImageGd
 {
 
     /**
-     * execute image create functions
+     * Execute image create functions
      *
      * @param array $file
      * @param string $pathImage
@@ -35,35 +35,42 @@ class ImageGd
         if ($file['type'] == "image/gif") {
             return imagecreatefromgif($pathImage);
         }
+        if ($file['type'] == "image/webp") {
+            return imagecreatefromwebp($pathImage);
+        }
     }
 
     /**
-     * image generate
+     * Image generate
      *
      * @param img resource $thumb
      * @param array $file
      * @param string $fileDest
      * @param int $porc
+     * @param string $saveImageAs ( jpg | png | gif | webp )
      * @link imagejpeg http://php.net/manual/pt_BR/function.imagejpeg.php
      * @link imagepng http://php.net/manual/pt_BR/function.imagepng.php
      * @link imagegif http://php.net/manual/pt_BR/function.imagegif.php
      * @return void
      */
-    public function imgGenerate($thumb, array $file, string $fileDest, int $porc)
+    public function imgGenerate($thumb, array $file, string $fileDest, int $porc, string $saveImageAs = '')
     {
-        if ($file['type'] == "image/jpeg") {
+        if ($saveImageAs == 'jpg' || $file['type'] == "image/jpeg") {
             return imagejpeg($thumb, $fileDest, $porc);
         }
-        if ($file['type'] == "image/png") {
+        if ($saveImageAs == 'png' || $file['type'] == "image/png") {
             return imagepng($thumb, $fileDest);
         }
-        if ($file['type'] == "image/gif") {
+        if ($saveImageAs == 'gif' || $file['type'] == "image/gif") {
             return imagegif($thumb, $fileDest);
+        }
+        if ($saveImageAs == 'webp' || $file['type'] == "image/webp") {
+            return imagewebp($thumb, $fileDest);
         }
     }
 
     /**
-     * set transparency image
+     * Set transparency image
      *
      * @param img resource $thumb
      * @link imagealphablending http://php.net/manual/pt_BR/function.imagealphablending.php

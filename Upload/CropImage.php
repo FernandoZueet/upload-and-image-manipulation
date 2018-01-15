@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,35 +23,35 @@ class CropImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc 
+     * Porc 
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * x crop
+     * X crop
      *
      * @var int
      */
     private $x = 0;
 
     /**
-     * y crop
+     * Y crop
      *
      * @var int
      */
     private $y = 0;
 
     /**
-     * width crop
+     * Width crop
      *
      * @var int
      */
     private $width = 0;
 
     /**
-     * height crop
+     * Height crop
      *
      * @var int
      */
@@ -62,7 +62,7 @@ class CropImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc 
+     * Get porc 
      *
      * @return int
      */
@@ -72,7 +72,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc 
+     * Set porc 
      *
      * @param int $porc
      * @return void
@@ -84,7 +84,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * get x crop
+     * Get x crop
      *
      * @return int
      */
@@ -94,7 +94,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * set x crop
+     * Set x crop
      *
      * @param int $x
      * @return void
@@ -106,7 +106,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * get y crop
+     * Get y crop
      *
      * @return int
      */
@@ -116,7 +116,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * set y crop
+     * Set y crop
      *
      * @param int $y
      * @return void
@@ -128,7 +128,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * get width crop
+     * Get width crop
      *
      * @return int
      */
@@ -138,7 +138,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * set width crop
+     * Set width crop
      *
      * @param int $width
      * @return void
@@ -150,7 +150,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * get height crop
+     * Get height crop
      *
      * @return int
      */
@@ -160,7 +160,7 @@ class CropImage extends Save implements SaveInterface
     }
 
     /**
-     * set height crop
+     * Set height crop
      *
      * @param int $height
      * @return void
@@ -175,8 +175,8 @@ class CropImage extends Save implements SaveInterface
     * Other Methods
     *-------------------------------------------------------------------------------------*/
     
-   /**
-     * executes validate
+    /**
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -205,6 +205,11 @@ class CropImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
 
     /**
@@ -224,7 +229,11 @@ class CropImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -238,7 +247,7 @@ class CropImage extends Save implements SaveInterface
         //image crop
         $img = imagecrop($image, ['x' => $this->getX(), 'y' => $this->getY(), 'width' => $this->getWidth(), 'height' => $this->getHeight()]);
         if ($img !== false) {
-            if ($imggd->imgGenerate($img, $file, $directory, $this->getPorc())) {
+            if ($imggd->imgGenerate($img, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
                 return true;
             } else {
                 return false;

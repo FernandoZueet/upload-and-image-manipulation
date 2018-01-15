@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -21,7 +21,7 @@ class Validate
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * valid type file
+     * Valid type file
      *
      * @param Core $container
      * @param array $mimeTypes
@@ -36,7 +36,7 @@ class Validate
     }
     
     /**
-     * valid size file
+     * Valid size file
      *
      * @param Core $container
      * @param int $maxSize

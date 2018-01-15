@@ -4,7 +4,7 @@
  * This file is part of the Upload Manipulation package.
  *
  * @link http://github.com/fernandozueet/upload-and-image-manipulation
- * @copyright 2017
+ * @copyright 2018
  * @license MIT License
  * @author Fernando Zueet <fernandozueet@hotmail.com>
  */
@@ -23,14 +23,14 @@ class RotateImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * porc
+     * Porc
      *
      * @var int
      */
     private $porc = 100;
 
     /**
-     * rotate image
+     * Rotate image
      *
      * @var int
      */
@@ -41,7 +41,7 @@ class RotateImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * get porc
+     * Get porc
      *
      * @return int
      */
@@ -51,7 +51,7 @@ class RotateImage extends Save implements SaveInterface
     }
 
     /**
-     * set porc
+     * Set porc
      *
      * @param int $porc
      * @return void
@@ -63,7 +63,7 @@ class RotateImage extends Save implements SaveInterface
     }
 
     /**
-     * get rotate image
+     * Get rotate image
      *
      * @return int
      */
@@ -73,7 +73,7 @@ class RotateImage extends Save implements SaveInterface
     }
 
     /**
-     * set rotate image
+     * Set rotate image
      *
      * @param int $rotate
      * @return void
@@ -88,7 +88,7 @@ class RotateImage extends Save implements SaveInterface
     *-------------------------------------------------------------------------------------*/
 
     /**
-     * executes validate
+     * Executes validate
      *
      * @param Core $container
      * @throws Exception
@@ -112,6 +112,11 @@ class RotateImage extends Save implements SaveInterface
         //valid is image
         $image = new \Upload\Validate\Image\ValidateImage();
         $image->validImageFormat($container);
+
+        //valid save as
+        if($this->getSaveAs()) {
+            $image->validIsImageSaveAs($this->getSaveAs());
+        }
     }
 
     /**
@@ -132,7 +137,11 @@ class RotateImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        $directory = $this->getDirectory().'/'.$file['new_name'];
+        if ($this->getSaveAs()) {
+            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
+        } else {
+            $directory = $this->getDirectory().'/'.$file['new_name'];
+        }
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);
@@ -147,7 +156,7 @@ class RotateImage extends Save implements SaveInterface
         }
 
         //image generate
-        if ($imggd->imgGenerate($rotation, $file, $directory, $this->getPorc())) {
+        if ($imggd->imgGenerate($rotation, $file, $directory, $this->getPorc(), $this->getSaveAs())) {
             return true;
         } else {
             return false;
