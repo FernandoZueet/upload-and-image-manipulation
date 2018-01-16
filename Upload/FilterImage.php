@@ -249,11 +249,7 @@ class FilterImage extends Save implements SaveInterface
         $file = $container->getFileActive();
 
         //directory final
-        if ($this->getSaveAs()) {
-            $directory = $this->getDirectory().'/'.pathinfo($this->getDirectory().'/'.$file['new_name'], PATHINFO_FILENAME).'.'.$this->getSaveAs();
-        } else {
-            $directory = $this->getDirectory().'/'.$file['new_name'];
-        }
+        $directory = $this->getDirectory().'/'.$file['new_name'];
 
         //id image resource
         $image = $imggd->imgCreateFrom($file, $file['tmp_name']);

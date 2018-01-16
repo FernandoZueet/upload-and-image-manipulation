@@ -422,15 +422,32 @@ class Core
         //execute functions validates
         $this->setClassExecutes($arrayExecutes);
         $countArray = [];
+        $contFile  = -1;
+        $contClass = -1;
         foreach ($this->getFile() as $ifile) {
+            $contFile++; //count file
+            $contClass = -1;
             foreach ($this->getClassExecutes() as $vld) {
-                if (array_key_exists($vld->getDirectory(), $countArray)) { //Equal directory count
+
+                $contClass++; //count class
+
+                //Equal directory count
+                if (array_key_exists($vld->getDirectory(), $countArray)) { 
                     $countArray[$vld->getDirectory()]++;
                 } else {
                     $countArray[$vld->getDirectory()] = 1;
                 }
-                $this->setFileActive($ifile); //set file active container
-                $vld->valid($this); //valid class executes
+
+                //update name extension save as
+                if ($vld->getSaveAs()) {
+                    $ifile = $this->getFileClass()->updateFile($this, $contFile, 'new_name', pathinfo($vld->getDirectory().'/'.$ifile['new_name'], PATHINFO_FILENAME).'.'.$vld->getSaveAs())[$contFile];
+                }
+
+                //set file active container
+                $this->setFileActive($ifile); 
+
+                //valid class executes
+                $vld->valid($this); 
             }
         }
 
@@ -467,11 +484,15 @@ class Core
             $contFile++; //count file
             $contClass = -1;
             foreach ($this->getClassExecutes() as $vld) {
+                
                 $contClass++; //count class
+
                 if ($contClass >= 1 && $this->getUnionExecutes()) { //union executes functions
                     $ifile = $this->getFileClass()->updateFile($this, $contFile, 'tmp_name', $vld->getDirectory().'/'.$ifile['new_name'])[$contFile];
                 }
+
                 $this->setFileActive($ifile); //set file active container
+
                 if ($vld->execute($this)) { //execute functions
                     $return++; //count success
                 };

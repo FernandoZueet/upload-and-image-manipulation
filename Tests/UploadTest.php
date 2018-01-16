@@ -26,6 +26,11 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         $filesInput['name'][0] = 'upload_teste.webp';
         $filesInput['size'][0] = '81123';
         $filesInput['type'][0] = 'image/webp';
+
+        // $filesInput['tmp_name'][1] = 'C:\upload_teste2.webp';
+        // $filesInput['name'][1] = 'upload_teste.webp';
+        // $filesInput['size'][1] = '81123';
+        // $filesInput['type'][1] = 'image/webp';
         
         //---------------------------------------------------------
 
@@ -53,7 +58,7 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         * ->setHeight(100) - height (int)
         */
         $resize = new \Upload\ResizeImage();
-        $resize->setDirectory('C:\upload')->setPorc(95)->setWidth(300)->setHeight(300);
+        $resize->setDirectory('C:\upload')->setSaveAs('jpg')->setPorc(95)->setWidth(300)->setHeight(300);
 
         //---------------------------------------------------------
 
@@ -67,7 +72,7 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         * ->validExecute([$upload2, $upload]) - array classes execute functions
         */
         $core = new \Upload\Core();
-        $core->setMessage(new \Upload\Langs\PtBr())->setFile($filesInput ?? [])->setUploadMultiple(true)
+        $core->setMessage(new \Upload\Langs\PtBr())->setFile($filesInput ?? [])->setUploadMultiple(false)
         ->setObjValids([$validaJpg, $validaPng])
         ->validExecute([$resize]);
 
@@ -83,6 +88,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         }
 
         //---------------------------------------------------------        
+
+        var_dump($core->getFile());
 
         /**
         * execute functions

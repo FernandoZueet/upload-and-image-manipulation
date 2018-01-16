@@ -239,6 +239,7 @@ class File
     {
         $file = $container->getFile();
         $file[$pos][$indice] = $newValue;
+        $container->setFile($file);
         return $file;
     }
 
